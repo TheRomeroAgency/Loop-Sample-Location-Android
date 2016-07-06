@@ -24,11 +24,10 @@ public class SampleApplication extends Application implements ILoopSDKCallback{
         super.onCreate();
 
         // initialize the Loop SDK. create an account to get your appId and appToken
-        String appId = "YOUR_APP_ID";
-        String appToken = "YOUR_APP_TOKEN";
-
-        String userId = "YOUR_USER_ID";
-        String deviceId = "YOUR_DEVICE_ID";
+        String appId = "YOUR APP ID";
+        String appToken = "YOUR APP TOKEN";
+        String userId = "YOUR USER ID";
+        String deviceId = "YOUR DEVICE ID";
 
         LoopSDK.initialize(this, appId, appToken, userId, deviceId);
     }

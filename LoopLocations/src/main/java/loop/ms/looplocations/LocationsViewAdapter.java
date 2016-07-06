@@ -76,6 +76,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
             holder.locationIcon = (ImageView)row.findViewById(R.id.locationicon);
             holder.txtTotalScore = (TextView) row.findViewById(R.id.score);
             holder.txtVisit = (TextView) row.findViewById(R.id.visits);
+            holder.txtVisitList = (TextView) row.findViewById(R.id.visitList);
 
             row.setTag(holder);
             row.setClickable(true);
@@ -99,10 +100,17 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
         }
         holder.txtTitle.setText(locationLabel);
         holder.locationIcon.setImageResource(locationLabel.equalsIgnoreCase("work")? R.drawable.work : R.drawable.home);
-        holder.txtLocationInfo.setText(String.format(Locale.US, "Latitude: %.3f, Longitutde: %.3f", location.latDegrees, location.longDegrees));
+        holder.txtLocationInfo.setText(String.format(Locale.US, "Latitude: %.3f, Longitude: %.3f", location.latDegrees, location.longDegrees));
         holder.txtLastVisited.setText(String.format(Locale.US, "Updated on %s", dateFormat.format(location.updatedAt)));
         holder.txtVisit.setText(getVisitInfo(location));
         holder.txtTotalScore.setText(String.format(Locale.US, "Score: %.3f Visits: %d", location.score, location.visits.size()));
+        List <Visit> visits = location.visits.getVisits();
+        String list = "";
+        for (int i = 0; i < visits.size(); i++) {
+            list += dateFormat.format(new Date(visits.get(i).startTime)) + " - " + dateFormat.format(new Date(visits.get(i).endTime)) + " (" + visits.get(i).durationInMinutes()
+ + " min)\n";
+        }
+        holder.txtVisitList.setText(list);
         row.setClickable(true);
 
         final String locationLabelTemp = locationLabel;
@@ -128,6 +136,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
         TextView txtLastVisited;
         TextView txtVisit;
         TextView txtTotalScore;
+        TextView txtVisitList;
     }
 
     public String getVisitInfo(KnownLocation knownLocation) {
