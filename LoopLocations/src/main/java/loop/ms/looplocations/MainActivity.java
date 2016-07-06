@@ -1,6 +1,7 @@
 package loop.ms.looplocations;
 
 import android.app.ListActivity;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -91,13 +93,49 @@ public class MainActivity extends AppCompatActivity {
         locationText = (TextView) this.findViewById(R.id.txtlocationtracking);
         currentLocationText = (TextView) this.findViewById(R.id.txtcurrentlocation);
 
+        final NotificationCompat.Builder notification =
+                new NotificationCompat.Builder(this);
+        notification.setContentTitle("LOOP notification").setContentText("").setSmallIcon(R.drawable.home);
+
+        final NotificationManager mNotifyMgr =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         knowLocations.registerItemChangedCallback("Locations", new IProfileItemChangedCallback() {
             @Override
             public void onItemChanged(String entityId) {
+                KnownLocation knownLocation = knowLocations.byEntityId(entityId);
+                if (knownLocation.hasLabels()){
+                    Label label = knownLocation.labels.getLabels().get(0);
+                    if (label.name.equals("home")){
+                        // Send a notification
+                        notification.setContentTitle("You are at Home");
+                        mNotifyMgr.notify(100, notification.build());
+
+                    }
+
+                    if (label.name.equals("work")){
+                        // Send a notification
+                        notification.setContentTitle("You are at Work").setSmallIcon(R.drawable.work);
+                        mNotifyMgr.notify(100, notification.build());
+                    }
+                }
             }
 
             @Override
             public void onItemAdded(String entityId) {
+                KnownLocation knownLocation = knowLocations.byEntityId(entityId);
+                if (knownLocation.hasLabels()){
+                    Label label = knownLocation.labels.getLabels().get(0);
+                    if (label.name.equals("home")){
+                        notification.setContentTitle("Home generated - you are at home");
+                        mNotifyMgr.notify(100, notification.build());
+                    }
+
+                    if (label.name.equals("work")){
+                        notification.setContentTitle("Home generated - you are at work").setSmallIcon(R.drawable.work);
+                        mNotifyMgr.notify(100, notification.build());
+                    }
+                }
             }
 
             @Override
