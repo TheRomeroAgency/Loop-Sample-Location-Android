@@ -31,7 +31,7 @@
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="Title"
+            android:text="@string/locationview_title"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:layout_height="fill_parent"
             android:textSize="12sp"
             android:textColor="#000000"
-            android:text="lat long"
+            android:text="@string/locationview_lat_long"
             android:textStyle="bold"/>
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
-            android:text="last updated"
+            android:text="@string/locationview_last_updated"
             android:textSize="12sp" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#0000A0"
-            android:text="score"
+            android:text="@string/locationview_score"
             android:textSize="12sp" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="#0000A0"
-            android:text="list of visits"
+            android:text="@string/locationview_list_of_visits"
             android:textSize="12sp"
             />
 
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#008000"
-            android:text="visits"
+            android:text="@string/locationview_visits"
             android:textSize="12sp"/>
 
 
