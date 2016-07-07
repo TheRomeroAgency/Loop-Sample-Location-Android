@@ -1,12 +1,12 @@
 package loop.ms.looplocations;
 
-import android.app.ListActivity;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -19,28 +19,20 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import ms.loop.loopsdk.core.LoopSDK;
-import ms.loop.loopsdk.profile.Drive;
-import ms.loop.loopsdk.profile.Drives;
 import ms.loop.loopsdk.profile.IProfileDownloadCallback;
 import ms.loop.loopsdk.profile.IProfileItemChangedCallback;
 import ms.loop.loopsdk.profile.KnownLocation;
 import ms.loop.loopsdk.profile.Label;
 import ms.loop.loopsdk.profile.Locations;
-import ms.loop.loopsdk.profile.Trip;
 import ms.loop.loopsdk.providers.LoopLocation;
 import ms.loop.loopsdk.providers.LoopLocationProvider;
-import ms.loop.loopsdk.signal.Signal;
-import ms.loop.loopsdk.util.LoopDate;
 import ms.loop.loopsdk.util.LoopError;
 
 public class MainActivity extends AppCompatActivity {
-
     private Locations knowLocations;
     private BroadcastReceiver mReceiver;
     private LocationsViewAdapter locationsViewAdapter;
@@ -57,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         knowLocations = Locations.createAndLoad(Locations.class, KnownLocation.class);
 
         List<KnownLocation> locations = knowLocations.sortedByScore();
-        locationsViewAdapter = new LocationsViewAdapter(this,
-                R.layout.locationview, locations);
+        locationsViewAdapter = new LocationsViewAdapter(this, R.layout.locationview, locations);
 
         locationsListView = (ListView)findViewById(R.id.locationlist);
 
@@ -66,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter("android.intent.action.onInitialized");
 
         mReceiver = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (LoopSDK.isInitialized()) {
@@ -75,30 +65,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        //registering our receiver
+
         this.registerReceiver(mReceiver, intentFilter);
 
         locationSwitch = (Switch) this.findViewById(R.id.locationswitch);
         locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (isChecked && !isLocationTurnedOn())
+                if (isChecked && !isLocationTurnedOn()) {
                     openLocationServiceSettingPage(MainActivity.this);
-
-                else if (!isChecked && isLocationTurnedOn())
+                }
+                else if (!isChecked && isLocationTurnedOn()) {
                     openLocationServiceSettingPage(MainActivity.this);
+                }
             }
         });
 
         locationText = (TextView) this.findViewById(R.id.txtlocationtracking);
         currentLocationText = (TextView) this.findViewById(R.id.txtcurrentlocation);
 
-        final NotificationCompat.Builder notification =
-                new NotificationCompat.Builder(this);
-        notification.setContentTitle("LOOP notification").setContentText("").setSmallIcon(R.drawable.home);
-
-        final NotificationManager mNotifyMgr =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        final NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         knowLocations.registerItemChangedCallback("Locations", new IProfileItemChangedCallback() {
             @Override
@@ -106,17 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 KnownLocation knownLocation = knowLocations.byEntityId(entityId);
                 if (knownLocation.hasLabels()){
                     Label label = knownLocation.labels.getLabels().get(0);
-                    if (label.name.equals("home")){
-                        // Send a notification
-                        notification.setContentTitle("You are at Home");
-                        mNotifyMgr.notify(100, notification.build());
-
+                    if (label.name.equals("home")) {
+                        createNotification(getString(R.string.home_notification_text), "", R.drawable.home);
                     }
 
                     if (label.name.equals("work")){
-                        // Send a notification
-                        notification.setContentTitle("You are at Work").setSmallIcon(R.drawable.work);
-                        mNotifyMgr.notify(100, notification.build());
+                        createNotification(getString(R.string.work_notification_text), "", R.drawable.work);
                     }
                 }
             }
@@ -127,13 +108,11 @@ public class MainActivity extends AppCompatActivity {
                 if (knownLocation.hasLabels()){
                     Label label = knownLocation.labels.getLabels().get(0);
                     if (label.name.equals("home")){
-                        notification.setContentTitle("Home generated - you are at home");
-                        mNotifyMgr.notify(100, notification.build());
+                        createNotification(getString(R.string.home_generated_text), "", R.drawable.home);
                     }
 
                     if (label.name.equals("work")){
-                        notification.setContentTitle("Home generated - you are at work").setSmallIcon(R.drawable.work);
-                        mNotifyMgr.notify(100, notification.build());
+                        createNotification(getString(R.string.work_generated_text), "", R.drawable.work);
                     }
                 }
             }
@@ -148,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (LoopSDK.isInitialized()) {
             LoopLocation loopLocation = LoopLocationProvider.getLastLocation();
             if (loopLocation == null) return;
+
             currentLocationText.setText(String.format(Locale.US, "Current Location: %.5f, %.5f", loopLocation.getLatitude(), loopLocation.getLongitude()));
         }
     }
@@ -164,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         }
        else {
             if (!LoopSDK.isInitialized()) return;
+
             knowLocations.download(true, new IProfileDownloadCallback() {
                 @Override
                 public void onProfileDownloadComplete(int i) {
@@ -255,5 +236,24 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ex) {
         }
         return locationEnbaled;
+    }
+
+    public void createNotification(String title, String text, int iconId) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(getApplicationContext());
+        b.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(iconId)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
+                .setContentIntent(contentIntent)
+                .setContentInfo("Info");
+
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(100, b.build());
     }
 }
