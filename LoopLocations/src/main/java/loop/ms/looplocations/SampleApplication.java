@@ -19,8 +19,7 @@ public class SampleApplication extends Application implements ILoopSDKCallback{
     private KnownLocationProcessor knownLocationProcessor;
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
 
         // initialize the Loop SDK. create an account to get your appId and appToken

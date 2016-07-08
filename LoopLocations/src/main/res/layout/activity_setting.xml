@@ -20,4 +20,16 @@
         android:textColor="#000000"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/versionId"
+        android:layout_below="@+id/userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/version"
+        android:textColor="#000000"
+        android:textSize="15sp" />
+
 </RelativeLayout>

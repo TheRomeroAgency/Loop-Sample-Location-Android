@@ -17,6 +17,7 @@ import ms.loop.loopsdk.core.LoopSDK;
 public class SettingActivity extends AppCompatActivity {
 
     TextView txtUserId;
+    TextView txtVersionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        txtVersionId = (TextView)this.findViewById(R.id.versionId);
+        txtVersionId.setText(String.format(Locale.US, "App Version: %s", BuildConfig.VERSION_NAME));
     }
 
     @Override

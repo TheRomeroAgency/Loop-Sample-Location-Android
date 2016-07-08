@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Loop Locations</string>
     <string name="userid">UserId</string>
+    <string name="version">App Version</string>
     <string name="loop_enabled">Location observation is on</string>
     <string name="turn_on_loop">Turn on location observation</string>
     <string name="enable_location_observation">Enable location observation?</string>
