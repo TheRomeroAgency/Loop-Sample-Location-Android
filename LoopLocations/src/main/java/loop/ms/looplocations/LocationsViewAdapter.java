@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,13 +92,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
         final KnownLocation location = locations.get(position);
         if (location == null ) return row;
 
-        String locationLabel = "Unknown";
-        if (location.hasLabels()){
-            locationLabel = location.labels.getLabels().get(0).name;
-
-            if (locationLabel.equals("work")) locationLabel = "Work";
-            if (locationLabel.equals("home")) locationLabel = "Home";
-        }
+        String locationLabel = getLocationLabels(location);
         holder.txtTitle.setText(locationLabel);
         holder.locationIcon.setImageResource(locationLabel.equalsIgnoreCase("work")? R.drawable.work : R.drawable.home);
         holder.txtLocationInfo.setText(String.format(Locale.US, "Latitude: %.3f, Longitude: %.3f", location.latDegrees, location.longDegrees));
@@ -108,7 +103,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
         String list = "";
         for (int i = 0; i < visits.size(); i++) {
             list += dateFormat.format(new Date(visits.get(i).startTime)) + " - " + dateFormat.format(new Date(visits.get(i).endTime)) + " (" + visits.get(i).durationInMinutes()
- + " min)\n";
+                    + " min)\n";
         }
         holder.txtVisitList.setText(list);
         row.setClickable(true);
@@ -140,12 +135,13 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
     }
 
     public String getVisitInfo(KnownLocation knownLocation) {
-        if (knownLocation.hasVisits()) {
-            Visits visits = knownLocation.visits;
-            Visit lastVisit = visits.getVisits().get(0);
-            return String.format(Locale.US, "Last visited on %s for %s", dateFormat.format(new Date(lastVisit.startTime)), getVisitDuration(lastVisit));
+
+        String enterExitInfo = String.format(Locale.US, "Entered at %s", dateFormat.format(new Date(knownLocation.lastEnteredAt)));
+
+        if (knownLocation.lastExitedAt != -1) {
+            enterExitInfo += String.format(Locale.US, " and exited at %s", dateFormat.format(new Date(knownLocation.lastExitedAt)));
         }
-        return "No visits yet!";
+        return enterExitInfo;
     }
 
     public String getVisitDuration(Visit visit)
@@ -165,5 +161,28 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
                 diff[1],
                 diff[2] < 9 ? "0":"",
                 diff[2]);
+    }
+
+    private String getLocationLabels(KnownLocation location) {
+
+        StringBuffer locationLabel = new StringBuffer();
+        if (location.hasLabels()){
+            for (Label label:location.labels) {
+                String tmpLabel = label.name;
+                if (tmpLabel.equals("work")) tmpLabel = "Work";
+                if (tmpLabel.equals("home")) tmpLabel = "Home";
+
+                if (!TextUtils.isEmpty(locationLabel.toString())){
+                    locationLabel.append(", ");
+                }
+                locationLabel.append(tmpLabel);
+
+            }
+        }
+        else {
+            return "Unknown";
+        }
+
+        return locationLabel.toString();
     }
 }
