@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadKnownLocations()
     {
+        knowLocations.load();
         final List<KnownLocation> locations = knowLocations.sortedByScore();
         if (locations.size() > 0) {
             runOnUiThread(new Runnable() {
