@@ -4,10 +4,17 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import ms.loop.loopsdk.core.ILoopSDKCallback;
 import ms.loop.loopsdk.core.LoopSDK;
 import ms.loop.loopsdk.core.LoopServiceManager;
 import ms.loop.loopsdk.processors.KnownLocationProcessor;
+import ms.loop.loopsdk.signal.Signal;
 import ms.loop.loopsdk.signal.SignalConfig;
 import ms.loop.loopsdk.util.LoopError;
 
@@ -23,12 +30,13 @@ public class SampleApplication extends Application implements ILoopSDKCallback{
         super.onCreate();
 
         // initialize the Loop SDK. create an account to get your appId and appToken
-        String appId = "YOUR APP ID";
-        String appToken = "YOUR APP TOKEN";
+        String appId = BuildConfig.APP_ID; // Or replace your id here
+        String appToken = BuildConfig.APP_TOKEN; // or replace your app token here
+
         String userId = "YOUR USER ID";
         String deviceId = "YOUR DEVICE ID";
 
-        LoopSDK.initialize(this, appId, appToken, userId, deviceId);
+        LoopSDK.initialize(this, appId, appToken);
     }
 
     @Override
@@ -39,6 +47,7 @@ public class SampleApplication extends Application implements ILoopSDKCallback{
         LoopServiceManager.startLocationProvider(SignalConfig.SIGNAL_SEND_MODE_BATCH);
         knownLocationProcessor = new KnownLocationProcessor();
         knownLocationProcessor.initialize();
+        LoopSDK.enableLogging("loggly", BuildConfig.LOGGLY_TOKEN);
     }
     @Override
     public void onInitializeFailed(LoopError loopError) {}
