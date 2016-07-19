@@ -9,7 +9,11 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
-        versionName "0.7.8"
+        versionName "0.7.18"
+
+        buildConfigField 'String', 'APP_ID', '\"' + LOCATIONS_APP_ID_PROP + '\"'
+        buildConfigField 'String', 'APP_TOKEN', '\"' + LOCATIONS_APP_TOKEN_PROP + '\"'
+        buildConfigField 'String', 'LOGGLY_TOKEN', '\"' + LOGGLY_TOKEN + '\"'
     }
     buildTypes {
         release {
@@ -41,6 +45,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile ('ms.loop:loopsdk:2.0.1-develop') { changing = true }
+    compile ('ms.loop:loopsdk:2.0.4-develop')
     compile 'com.android.support:design:23.4.0'
+    compile ('com.google.android.gms:play-services-location:8.4.0'){
+        exclude module: 'play-services-maps'
+    }
 }

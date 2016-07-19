@@ -37,7 +37,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         txtVersionId = (TextView)this.findViewById(R.id.versionId);
-        txtVersionId.setText(String.format(Locale.US, "App Version: %s", BuildConfig.VERSION_NAME));
+        txtVersionId.setText(String.format(Locale.US, "App Version: %s/%s", BuildConfig.VERSION_NAME, LoopSDK.getLibraryVersion()));
     }
 
     @Override
