@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +29,6 @@ import ms.loop.loopsdk.profile.IProfileItemChangedCallback;
 import ms.loop.loopsdk.profile.KnownLocation;
 import ms.loop.loopsdk.profile.Label;
 import ms.loop.loopsdk.profile.Locations;
-import ms.loop.loopsdk.providers.LoopLocation;
 import ms.loop.loopsdk.providers.LoopLocationProvider;
 import ms.loop.loopsdk.util.LoopError;
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateCurrentLocation() {
         if (LoopSDK.isInitialized()) {
-            LoopLocation loopLocation = LoopLocationProvider.getLastLocation();
+            Location loopLocation = LoopLocationProvider.getLastLocation();
             if (loopLocation == null) return;
 
             currentLocationText.setText(String.format(Locale.US, "Current Location: %.5f, %.5f", loopLocation.getLatitude(), loopLocation.getLongitude()));
