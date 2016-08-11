@@ -14,6 +14,7 @@ android {
         buildConfigField 'String', 'APP_ID', '\"' + LOCATIONS_APP_ID_PROP + '\"'
         buildConfigField 'String', 'APP_TOKEN', '\"' + LOCATIONS_APP_TOKEN_PROP + '\"'
         buildConfigField 'String', 'LOGGLY_TOKEN', '\"' + LOGGLY_TOKEN + '\"'
+        buildConfigField 'String', 'MIXPANEL_TOKEN', '\"' + MIXPANEL_TOKEN + '\"'
     }
     buildTypes {
         release {
@@ -50,4 +51,5 @@ dependencies {
     compile ('com.google.android.gms:play-services-location:8.4.0'){
         exclude module: 'play-services-maps'
     }
+    compile 'com.mixpanel.android:mixpanel-android:4.+'
 }
