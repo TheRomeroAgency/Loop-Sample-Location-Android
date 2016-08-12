@@ -34,4 +34,9 @@
     <string name="locationview_lat_long">lat long</string>
     <string name="locationview_title">Title</string>
 
+
+    <string name="clearalllocations">CLEAR ALL LOCATIONS</string>
+    <string name="learnmore">LEARN MORE</string>
+    <string name="locationtracker">LOCATION TRACKER</string>
+
 </resources>

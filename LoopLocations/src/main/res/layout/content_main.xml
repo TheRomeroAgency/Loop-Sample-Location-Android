@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
+    android:background="@color/defaultbackground"
+    android:layout_marginTop="2dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:ignore="all"
@@ -59,8 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/locationsettingcontainer"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingTop="10dp">
 
             <ListView
@@ -71,8 +70,6 @@
                 android:dividerHeight="2dp"
                 android:layerType="software"
                 android:listSelector="@color/colorPrimary"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
                 android:scrollbars="none" />
         </RelativeLayout>
 

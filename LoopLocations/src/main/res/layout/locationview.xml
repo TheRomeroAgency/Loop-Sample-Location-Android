@@ -49,8 +49,6 @@
             android:textColor="#000000"
             android:textSize="12sp" />
         </LinearLayout>>
-
-
     <LinearLayout
         android:id="@+id/RelativeLayout02"
         android:layout_width="wrap_content"
@@ -119,23 +117,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:background="@color/visitsbackground">
 
         <TextView
             android:id="@+id/visitcount"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="#0000A0"
             android:text="@string/locationview_list_of_visits"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/visitlable"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="#008000"
             android:text="@string/locationview_visits"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 </RelativeLayout>

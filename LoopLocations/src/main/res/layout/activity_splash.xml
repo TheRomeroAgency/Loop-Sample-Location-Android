@@ -5,12 +5,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/splash_background"
-    tools:ignore="all">
+    tools:ignore="all"
+    android:layout_gravity="center">
 
-    <ImageView android:id="@+id/splashscreen" android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+    <ImageView android:id="@+id/splashscreen" android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/splash"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:scaleType="center"
+        />
 
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content" />

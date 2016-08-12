@@ -2,13 +2,18 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
-    <color name="colorPrimary">#606C7E</color>
-    <color name="colorPrimaryLight">#E4E4E4</color>
-    <color name="colorPrimaryDark">#454D5A</color>
+    <color name="colorPrimary">#F2F0F3</color>
+    <color name="colorPrimaryLight">#F2F0F3</color>
+    <color name="colorPrimaryDark">#AEADAF</color>
     <color name="colorgray">#303030</color>
-    <color name="action_menu_selected_color">#26ABCD</color>
-    <color name="action_menu_unselected_color">#E9E9E9</color>
+    <color name="action_menu_selected_color">#AEADAF</color>
+    <color name="action_menu_unselected_color">#AEADAF</color>
     <color name="splash_background">#E7E7E7</color>
     <color name="drawerIcon">#26ABCD</color>
+    <color name="visitsbackground">#E3E3E7</color>
+    <color name="defaultbackground">#F2F0F3</color>
+
+
+
 
 </resources>
