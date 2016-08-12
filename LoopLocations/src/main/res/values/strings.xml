@@ -27,7 +27,7 @@
     <string name="work_notification_text">You are at Work</string>
     <string name="home_generated_text">Home generated - you are at home</string>
     <string name="work_generated_text">Work generated - you are at work</string>
-    <string name="locationview_visits">visits</string>
+    <string name="locationview_visits">VISITS</string>
     <string name="locationview_list_of_visits">list of visits</string>
     <string name="locationview_score">score</string>
     <string name="locationview_last_updated">last updated</string>

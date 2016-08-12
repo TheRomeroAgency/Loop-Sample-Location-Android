@@ -1,83 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listcontainer"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:paddingTop="10dp"
-    android:paddingLeft="5dp"
+    android:paddingLeft="0dp"
     android:paddingStart="5dp"
-    android:paddingRight="10dp"
+    android:paddingRight="0dp"
     android:paddingEnd="10dp"
     android:paddingBottom="10dp"
     android:weightSum="1">
 
-    <!-- icon -->
-    <ImageView
-        android:id="@+id/locationicon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/home" />
-
     <LinearLayout
-        android:id="@+id/RelativeLayout05"
+        android:id="@+id/RelativeLayout01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_alignParentLeft="true">
+
+        <LinearLayout
+            android:id="@+id/RelativeLayout04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/locationicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/home" />
 
         <TextView
-            android:id="@+id/txtTitle"
+            android:id="@+id/locationName"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/locationview_title"
+            android:textColor="@color/colorgray"
+            android:textSize="16sp" />
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtlastvisited"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:text="@string/locationview_title"
             android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="12sp" />
+        </LinearLayout>>
+
+
+    <LinearLayout
+        android:id="@+id/RelativeLayout02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="5dp"
+        android:layout_toLeftOf="@+id/RelativeLayout03"
+        android:layout_alignBottom="@+id/RelativeLayout01"
+        android:background="@color/white">
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/enterIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/com_mixpanel_android_mini_inapp_rounded"
+            android:layout_gravity="bottom"/>
 
         <TextView
-            android:id="@+id/txtlatlong"
+            android:id="@+id/lastvisitentertime"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textSize="12sp"
             android:textColor="#000000"
             android:text="@string/locationview_lat_long"
-            android:textStyle="bold"/>
+            android:layout_gravity="bottom"/>
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/enterarrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/com_mixpanel_android_arrowleft"
+            android:layout_gravity="bottom"/>
 
         <TextView
-            android:id="@+id/lastUpdatedtxt"
+            android:id="@+id/lastvisitexittime"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
             android:text="@string/locationview_last_updated"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_gravity="bottom"/>
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/durionIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/com_mixpanel_android_arrowleft"
+            android:layout_gravity="bottom"/>
 
         <TextView
-            android:id="@+id/score"
+            android:id="@+id/visitduration"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#0000A0"
             android:text="@string/locationview_score"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/RelativeLayout03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
 
         <TextView
-            android:id="@+id/visitList"
+            android:id="@+id/visitcount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="#0000A0"
             android:text="@string/locationview_list_of_visits"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/visits"
+            android:id="@+id/visitlable"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#008000"
             android:text="@string/locationview_visits"
             android:textSize="12sp"/>
 
-
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
