@@ -21,8 +21,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemTextColor="@drawable/nav_view_item_textcolor"
-        app:itemIconTint="#ffffff"
-        app:menu="@menu/activity_main_drawer" >
+        app:itemIconTint="#ffffff">
+        <!--app:menu="@menu/activity_main_drawer" >-->
+
+        <ListView
+            android:id="@+id/custom_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="35dp"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,18 +46,26 @@
             android:paddingLeft="15dp"
             android:text="TERMS"
             customTextView:fontName="Roboto-Medium"
-            android:textColor="#26ABCD"
             android:textSize="12sp" />
 
         <sampleapp.loop.ms.locations.utils.CustomTextView
             android:id="@+id/privacy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:paddingLeft="10dp"
             android:text="PRIVACY"
             customTextView:fontName="Roboto-Medium"
-            android:textColor="#26ABCD"
             android:textSize="12sp" />
+
+        <sampleapp.loop.ms.locations.utils.CustomTextView
+            android:id="@+id/copyrights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text=" &#169; 2016 MICROSOFT"
+            customTextView:fontName="Roboto-Medium"
+            android:textSize="12sp" />
+
 
     </LinearLayout>
     </android.support.design.widget.NavigationView>>

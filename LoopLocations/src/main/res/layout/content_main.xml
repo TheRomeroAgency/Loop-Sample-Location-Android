@@ -55,22 +55,22 @@
 
     </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/tripslist_container"
+    <RelativeLayout
+        android:id="@+id/tripslist_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/locationsettingcontainer"
+        android:paddingTop="10dp">
+
+        <ListView
+            android:id="@+id/tripslist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/locationsettingcontainer"
-            android:paddingTop="10dp">
-
-            <ListView
-                android:id="@+id/tripslist"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@drawable/dashed"
-                android:dividerHeight="2dp"
-                android:layerType="software"
-                android:listSelector="@color/colorPrimary"
-                android:scrollbars="none" />
-        </RelativeLayout>
+            android:divider="@drawable/dashed"
+            android:dividerHeight="2dp"
+            android:layerType="software"
+            android:listSelector="@color/colorPrimary"
+            android:scrollbars="none" />
+    </RelativeLayout>
 
 </RelativeLayout>

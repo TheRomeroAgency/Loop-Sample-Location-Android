@@ -37,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:text="@string/locationview_title"
-            android:textColor="@color/colorgray"
             android:textSize="16sp" />
             </LinearLayout>
 

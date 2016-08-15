@@ -27,7 +27,7 @@
             android:text="@string/locations"
             android:layout_gravity="top"
             android:textSize="27sp"
-            customTextView:fontName="DroidSansMono"
+            customTextView:fontName="RobotoCondensed-Regular"
             android:paddingLeft="16dp"
             android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>>

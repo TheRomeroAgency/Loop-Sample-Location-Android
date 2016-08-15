@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,6 +31,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        toggle.setHomeAsUpIndicator(R.drawable.com_mixpanel_android_arrowleft);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        navigationView.getMenu().getItem(0).setChecked(true);
+///        navigationView.getMenu().getItem(0).setChecked(true);
         knownLocations = Locations.createAndLoad(Locations.class, KnownLocation.class);
 
         KnownLocation knownLocation = knownLocations.createItem(new Location("gps"));
@@ -214,6 +219,24 @@ public class MainActivity extends AppCompatActivity
                 openUrlInBrowser(PRIVACY_URL);
             }
         });
+
+        final String[] items = new String[] { "LOCATION TRACKER", "CLEAR ALL LOCATIONS", "LEARN MORE"};
+        String[] ids = getResources().getStringArray(R.array.navigationmenu);
+
+        final ListView lv1 = (ListView) findViewById(R.id.custom_list);
+        lv1.setAdapter(new CustomListAdapter(this, ids));
+        lv1.setItemsCanFocus(false);
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = lv1.getItemAtPosition(position);
+                NavigationViewItem newsData = (NavigationViewItem) o;
+                Toast.makeText(MainActivity.this, "Selected :" + " " + newsData, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
     }
 
@@ -307,7 +330,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void loadKnownLocationsInUI() {
-        knownLocations.load();
+       // knownLocations.load();
         final TextView titleTextView = (TextView) findViewById(R.id.toolbar_title);
         String title = "";
         List<KnownLocation> locations = new ArrayList<>();
@@ -326,12 +349,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        final List<KnownLocation> finalDrives = locations;
+        final List<KnownLocation> finalDrives = new ArrayList<KnownLocation>(knownLocations.sortedByScore());;
         final String finalTitle = title;
 
         runOnUiThread(new Runnable() {
             public void run() {
-                titleTextView.setText(finalTitle);
+              //  titleTextView.setText(finalTitle);
                 adapter.update(finalDrives);
             }
         });

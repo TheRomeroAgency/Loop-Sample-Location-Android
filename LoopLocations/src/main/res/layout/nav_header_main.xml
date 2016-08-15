@@ -4,7 +4,7 @@
     xmlns:customTextView="https://schemas.android.com/apk/res/trips.sampleapp.loop.ms.tripssampleapp.utils"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/black"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"

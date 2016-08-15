@@ -51,9 +51,9 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
 
         locations.clear();
         for (KnownLocation location:data) {
-            if (location.score > 0) {
+            //if (location.score > 0) {
                 locations.add(location);
-            }
+            //}
         }
         this.notifyDataSetChanged();
     }

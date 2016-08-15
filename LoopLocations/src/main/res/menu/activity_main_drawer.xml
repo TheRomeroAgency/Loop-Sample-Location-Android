@@ -6,8 +6,8 @@
             android:id="@+id/nav_locationtracker"
             android:title="@string/locationtracker"
             android:actionMenuTextColor="@color/action_menu_unselected_color"
-            android:textSize="68sp"
-            app:actionLayout="@layout/nav_header_main"/>
+            android:textSize="72sp"
+            android:actionLayout="@layout/locationtracker"/>
 
     </group>
 
@@ -16,7 +16,7 @@
             android:id="@+id/nav_locations"
             android:title="@string/clearalllocations"
             android:actionMenuTextColor="@color/action_menu_unselected_color"
-            android:textSize="68sp"/>
+            android:textSize="72sp"/>
 
     </group>
 
@@ -25,7 +25,7 @@
             android:id="@+id/nav_version"
             android:title="@string/learnmore"
             android:actionMenuTextColor="@color/action_menu_unselected_color"
-            android:textSize="38sp"/>
+            android:textSize="72sp"/>
 
     </group>
 </menu>

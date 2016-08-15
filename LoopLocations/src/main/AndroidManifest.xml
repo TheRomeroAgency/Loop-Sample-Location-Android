@@ -23,7 +23,7 @@
         tools:ignore="all">
         <activity
             android:name=".SplashActivity"
-            android:label="Trips"
+            android:label="Locations"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
