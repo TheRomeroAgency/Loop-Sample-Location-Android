@@ -4,20 +4,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingLeft="0dp"
-    android:paddingStart="5dp"
-    android:paddingRight="0dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="10dp"
     android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/RelativeLayout01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:orientation="vertical"
-        android:layout_alignParentLeft="true">
+        android:paddingLeft="16dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
 
         <LinearLayout
             android:id="@+id/RelativeLayout04"
@@ -25,117 +22,138 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <!-- icon -->
-        <ImageView
-            android:id="@+id/locationicon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/home" />
+            <ImageView
+                android:id="@+id/locationicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/locationName"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/locationview_title"
-            android:textSize="16sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/locationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/locationview_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtlastvisited"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:paddingTop="5dp"
             android:text="@string/locationview_title"
             android:textColor="#000000"
             android:textSize="12sp" />
-        </LinearLayout>>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/RelativeLayout02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingRight="5dp"
+        android:paddingRight="15dp"
         android:layout_toLeftOf="@+id/RelativeLayout03"
         android:layout_alignBottom="@+id/RelativeLayout01"
-        android:background="@color/white">
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
 
-        <!-- icon -->
         <ImageView
             android:id="@+id/enterIcon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/com_mixpanel_android_mini_inapp_rounded"
-            android:layout_gravity="bottom"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/from_circle"
+            android:layout_gravity="center"
+            />
 
         <TextView
             android:id="@+id/lastvisitentertime"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#000000"
             android:text="@string/locationview_lat_long"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp" />
 
         <!-- icon -->
         <ImageView
             android:id="@+id/enterarrow"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/com_mixpanel_android_arrowleft"
-            android:layout_gravity="bottom"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/small_arrow"
+            android:layout_gravity="center"
+            android:paddingLeft="8dp"/>
+
+        <ImageView
+            android:id="@+id/exitIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/to_circle"
+            android:layout_gravity="center"
+            android:paddingLeft="8dp"/>
 
         <TextView
             android:id="@+id/lastvisitexittime"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textColor="#000000"
+            android:layout_height="wrap_content"
             android:text="@string/locationview_last_updated"
             android:textSize="12sp"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp"/>
 
         <!-- icon -->
         <ImageView
             android:id="@+id/durionIcon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/com_mixpanel_android_arrowleft"
-            android:layout_gravity="bottom"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/duration"
+            android:layout_gravity="center"
+            android:paddingLeft="5dp"/>
 
         <TextView
             android:id="@+id/visitduration"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textColor="#0000A0"
+            android:layout_height="wrap_content"
             android:text="@string/locationview_score"
             android:textSize="12sp"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/RelativeLayout03"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentRight="true"
-        android:background="@color/visitsbackground">
+        android:background="@color/visitsbackground"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        >
 
         <TextView
             android:id="@+id/visitcount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#0000A0"
             android:text="@string/locationview_list_of_visits"
-            android:textSize="12sp"
-            android:textAlignment="center"/>
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/visitlable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#008000"
-            android:text="@string/locationview_visits"
+            android:text="@string/locationview_visit"
             android:textSize="12sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
     </LinearLayout>
 </RelativeLayout>

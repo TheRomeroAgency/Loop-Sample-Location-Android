@@ -5,14 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.TypedArray;
-import android.graphics.drawable.BitmapDrawable;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,13 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import ms.loop.loopsdk.api.LoopApiHelper;
+import ms.loop.loopsdk.core.ILoopServiceCallback;
 import ms.loop.loopsdk.core.LoopSDK;
 import ms.loop.loopsdk.profile.IProfileDownloadCallback;
 import ms.loop.loopsdk.profile.IProfileItemChangedCallback;
@@ -49,9 +42,7 @@ import ms.loop.loopsdk.profile.KnownLocation;
 import ms.loop.loopsdk.profile.Label;
 import ms.loop.loopsdk.profile.Labels;
 import ms.loop.loopsdk.profile.Locations;
-import ms.loop.loopsdk.profile.Trip;
-import ms.loop.loopsdk.providers.LoopLocationProvider;
-import ms.loop.loopsdk.signal.SignalConfig;
+import ms.loop.loopsdk.profile.LoopLocale;
 import ms.loop.loopsdk.util.LoopError;
 import sampleapp.loop.ms.locations.utils.ViewUtils;
 
@@ -61,7 +52,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver mReceiver;
     private LocationsViewAdapter adapter;
     private ListView tripListView;
-    private Switch locationSwitch;
+ //   private Switch locationSwitch;
     private TextView locationText;
     private static Locations knownLocations;
     private TextView termsTextView;
@@ -72,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
     private NavigationView navigationView;
 
-    private static String Loop_URL = "https://www.loop.ms/";
+
     private static String TOU_URL = "http://go.microsoft.com/fwlink/?LinkID=530144";
     private static String PRIVACY_URL = "http://go.microsoft.com/fwlink/?LinkId=521839";
 
@@ -89,12 +80,25 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        toggle.setHomeAsUpIndicator(R.drawable.com_mixpanel_android_arrowleft);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.locations);
+
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.setItemIconTintList(null);
+        IntentFilter intentFilter = new IntentFilter("android.intent.action.onInitialized");
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                loadKnownLocations();
+            }
+        };
+        //registering our receiver
+        this.registerReceiver(mReceiver, intentFilter);
+
+       /* navigationView.setItemIconTintList(null);
         navigationView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity
             return true;
             }
         });
-
+*/
         Menu m = navigationView.getMenu();
         for (int i=0;i < m.size(); i++) {
             MenuItem mi = m.getItem(i);
@@ -140,17 +144,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-///        navigationView.getMenu().getItem(0).setChecked(true);
         knownLocations = Locations.createAndLoad(Locations.class, KnownLocation.class);
-
-        KnownLocation knownLocation = knownLocations.createItem(new Location("gps"));
-        knownLocation.entityId = "nA6erglToho99RwhQi4PDcSf6gsa+3XU3fkv8ppSpoI=";
-        knownLocation.labels.add("home");
-
-        KnownLocation knownLocation1 = knownLocations.createItem(new Location("gps"));
-        knownLocation1.entityId = "nA6erglToho99RwhQi4PDcSf6gsa+3XU3fkv8ppSpoH=";
-        knownLocation1.labels.add("work");
-
         List<KnownLocation> locations = new ArrayList<KnownLocation>(knownLocations.sortedByScore());
         adapter = new LocationsViewAdapter(this,
                 R.layout.locationview, locations);
@@ -164,41 +158,27 @@ public class MainActivity extends AppCompatActivity
             }
             @Override
             public void onItemAdded(String entityId) {
-                SampleAppApplication.mixpanel.track("Drive created");
+                SampleAppApplication.mixpanel.track("Known Location created");
+
+                final KnownLocation location = knownLocations.byEntityId(entityId);
+                if (!location.hasLabels()){
+                    LoopApiHelper.getLocale(location.latDegrees, location.longDegrees, new ILoopServiceCallback<LoopLocale>() {
+                        @Override
+                        public void onSuccess(LoopLocale value) {
+                            location.labels.add(value.getFriendlyName(), 1);
+                        }
+                        @Override
+                        public void onError(LoopError error) {}
+                    });
+                }
             }
 
             @Override
             public void onItemRemoved(String entityId) {}
         });
 
-        IntentFilter intentFilter = new IntentFilter("android.intent.action.onInitialized");
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                loadKnownLocations();
-            }
-        };
-        //registering our receiver
-        this.registerReceiver(mReceiver, intentFilter);
 
-        locationSwitch = (Switch) this.findViewById(R.id.locationswitch);
-        locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                boolean isLocationOn = SampleAppApplication.isLocationTurnedOn(MainActivity.this);
-                if (isChecked) {
-                    if (!isLocationOn) {
-                        //SampleAppApplication.openLocationServiceSettingPage(MainActivity.this);
-                    }
-                    LoopLocationProvider.start(SignalConfig.SIGNAL_SEND_MODE_BATCH);
-                }
-                else {
-                    LoopLocationProvider.stop();
-                }
-
-                SampleAppApplication.setSharedPrefValue(getApplicationContext(), "AppTracking", isChecked);
-            }
-        });
         locationText = (TextView) this.findViewById(R.id.txtlocationtracking);
         enableLocation = (RelativeLayout) this.findViewById(R.id.locationstrackingcontainer);
 
@@ -220,11 +200,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        final String[] items = new String[] { "LOCATION TRACKER", "CLEAR ALL LOCATIONS", "LEARN MORE"};
         String[] ids = getResources().getStringArray(R.array.navigationmenu);
 
         final ListView lv1 = (ListView) findViewById(R.id.custom_list);
-        lv1.setAdapter(new CustomListAdapter(this, ids));
+        lv1.setAdapter(new NavigationViewAdapter(this, ids));
         lv1.setItemsCanFocus(false);
         lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -236,10 +215,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
+        loadKnownLocations();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -265,8 +242,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onProfileDownloadComplete(int itemCount) {
 
-                if (itemCount == 0)
-                {
+                if (itemCount == 0) {
                     loadSampleLocations();
                 }
                 loadKnownLocationsInUI();
@@ -281,7 +257,6 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         loadKnownLocationsInUI();
-        checkTrackingEnbaled();
     }
 
     @Override
@@ -303,30 +278,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void checkTrackingEnbaled() {
-        if (SampleAppApplication.getBooleanSharedPrefValue(this.getApplicationContext(), "AppTracking", true)) {
-
-            if (checkSelectedItemType().equals("TRIPS")){
-                locationText.setText(this.getText(R.string.trips_recording_on));
-            }
-            else {
-                locationText.setText(this.getText(R.string.drives_recording_on));
-            }
-
-            locationSwitch.setChecked(true);
-            //enableLocation.setVisibility(View.GONE);
-        } else {
-            if (checkSelectedItemType().equals("TRIPS")){
-                locationText.setText(this.getText(R.string.trips_recording_off));
-            }
-            else {
-                locationText.setText(this.getText(R.string.drives_recording_off));
-            }
-            locationSwitch.setChecked(false);
-           // enableLocation.setVisibility(View.VISIBLE);
-        }
     }
 
     public void loadKnownLocationsInUI() {
@@ -373,10 +324,10 @@ public class MainActivity extends AppCompatActivity
     public void loadSampleLocations()
     {
         try {
-            JSONArray jsonArray = new JSONArray(loadJSONFromAsset("sample_trips.json"));
+            JSONArray jsonArray = new JSONArray(loadJSONFromAsset("sample_locations.json"));
             for (int i =0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-              //  localTrips.createAndAddItem(jsonObject);
+                knownLocations.createAndAddItem(jsonObject);
             }
 
         } catch (JSONException e) {

@@ -19,39 +19,60 @@
         android:layout_alignParentEnd="true"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/locationstrackingcontainer"
+    <RelativeLayout
+        android:id="@+id/locationstrackingcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imageView2"
+        android:paddingLeft="15dp"
+        android:paddingRight="16dp">
+
+        <sampleapp.loop.ms.locations.utils.CustomTextView
+            android:id="@+id/txtlocationtracking"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_below="@+id/imageView2"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Current Location"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#647178"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            customTextView:fontName="Roboto-Regular" />
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/location"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"
+            android:layout_toRightOf="@+id/txtlocationtracking"/>
+
+        <sampleapp.loop.ms.locations.utils.CustomTextView
+            android:id="@+id/txtlocationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:text="HOME"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#647178"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            customTextView:fontName="Roboto-Regular"
+            android:layout_toRightOf="@+id/locationIcon"/>
 
 
-            <sampleapp.loop.ms.locations.utils.CustomTextView
-                android:id="@+id/txtlocationtracking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:paddingLeft="3dp"
-                android:text="DRIVE RECORDING ON"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                customTextView:fontName="DroidSansMono" />
+    </RelativeLayout>
 
-            <Switch
-                android:id="@+id/locationswitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="10dp"
-                android:text="" />
-
-        </RelativeLayout>
-
+    <RelativeLayout
+        android:id="@+id/border"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/splash_background"
+        android:layout_below="@+id/locationstrackingcontainer"/>
 
     </RelativeLayout>
 
@@ -60,14 +81,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/locationsettingcontainer"
-        android:paddingTop="10dp">
+        android:background="@color/listbackground">
 
         <ListView
             android:id="@+id/tripslist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@drawable/dashed"
-            android:dividerHeight="2dp"
+            android:divider="@color/splash_background"
+            android:dividerHeight="1dp"
             android:layerType="software"
             android:listSelector="@color/colorPrimary"
             android:scrollbars="none" />

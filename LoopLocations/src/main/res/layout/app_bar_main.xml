@@ -28,7 +28,8 @@
             android:layout_gravity="top"
             android:textSize="27sp"
             customTextView:fontName="RobotoCondensed-Regular"
-            android:paddingLeft="16dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/headertitle"
             android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>>
 

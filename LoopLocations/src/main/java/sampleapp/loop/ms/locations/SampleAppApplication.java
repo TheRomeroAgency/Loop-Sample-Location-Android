@@ -57,7 +57,7 @@ public class SampleAppApplication extends Application implements ILoopSDKCallbac
         String userId = "YOUR USER ID";
         String deviceId = "YOUR DEVICE ID";
 
-        LoopSDK.initialize(this, appId, appToken,"17c62bde-ddf2-4469-9418-b435cdf218fb", "b05008e3-28ac-475d-a67d-7d335fd4e093");
+        LoopSDK.initialize(this, appId, appToken);
         applicationContext = this;
 
         String projectToken = BuildConfig.MIXPANEL_TOKEN;
@@ -153,24 +153,24 @@ public class SampleAppApplication extends Application implements ILoopSDKCallbac
 
     public static void setSharedPrefValue(Context context, String key, long value)
     {
-        context.getSharedPreferences("TripsApp",0).edit().putLong(key, value).apply();
-        context.getSharedPreferences("TripsApp",0).edit().commit();
+        context.getSharedPreferences("SampleApp",0).edit().putLong(key, value).apply();
+        context.getSharedPreferences("SampleApp",0).edit().commit();
     }
 
     public static long getLongSharedPrefValue(Context context, String key)
     {
-        return context.getSharedPreferences("TripsApp",0).getLong(key, 0);
+        return context.getSharedPreferences("SampleApp",0).getLong(key, 0);
     }
 
     public static void setSharedPrefValue(Context context, String key, boolean value)
     {
-        context.getSharedPreferences("TripsApp",0).edit().putBoolean(key, value).apply();
-        context.getSharedPreferences("TripsApp",0).edit().commit();
+        context.getSharedPreferences("SampleApp",0).edit().putBoolean(key, value).apply();
+        context.getSharedPreferences("SampleApp",0).edit().commit();
     }
 
     public static boolean getBooleanSharedPrefValue(Context context, String key, boolean defValue)
     {
-        return context.getSharedPreferences("TripsApp",0).getBoolean(key, defValue);
+        return context.getSharedPreferences("SampleApp",0).getBoolean(key, defValue);
     }
 
     public static String convertDateFormat(Date localdate, boolean useTime) {

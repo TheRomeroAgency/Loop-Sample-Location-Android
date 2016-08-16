@@ -19,7 +19,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-
         <sampleapp.loop.ms.locations.utils.CustomTextView
             android:id="@+id/txtlocationtracking"
             android:layout_width="wrap_content"

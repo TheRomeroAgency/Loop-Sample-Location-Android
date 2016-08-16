@@ -23,13 +23,13 @@
 		"name": "work",
 		"score": 1
 	}],
-	"lastEntered": "2016-03-27T08:50:27.830-07:00",
+	"lastEntered": "2016-03-24T08:50:27.830-07:00",
 	"latDegrees": 47.614816,
 	"longDegrees": -122.194161,
 	"radiusMeters": 150,
 	"visits": [{
-		"endTime": "2016-03-27T16:30:27.830-07:00",
-		"startTime": "2016-03-27T08:50:27.830-07:00"
+		"endTime": "2016-03-24T16:30:27.830-07:00",
+		"startTime": "2016-03-24`T08:50:27.830-07:00"
 	}],
 	"_portalTestUser": true,
 	"userId": "17c62bde-ddf2-4469-9418-b435cdf218fb",

@@ -12,8 +12,6 @@
     <color name="drawerIcon">#26ABCD</color>
     <color name="visitsbackground">#E3E3E7</color>
     <color name="defaultbackground">#F2F0F3</color>
-
-
-
-
+    <color name="headertitle">#FD8B89</color>
+    <color name="listbackground">#F6F4F7</color>
 </resources>

@@ -51,9 +51,9 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
 
         locations.clear();
         for (KnownLocation location:data) {
-            //if (location.score > 0) {
+            if (location.score > 0) {
                 locations.add(location);
-            //}
+            }
         }
         this.notifyDataSetChanged();
     }
@@ -81,6 +81,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
 
             holder.locationIcon = (ImageView)row.findViewById(R.id.locationicon);
             holder.txtVisitCount = (TextView) row.findViewById(R.id.visitcount);
+            holder.txtVisitLabel = (TextView) row.findViewById(R.id.visitlable);
 
             row.setTag(holder);
             row.setClickable(true);
@@ -109,6 +110,10 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
             holder.txtLastVisitEnterTime.setText(timeFormat.format(new Date(visit.startTime)));
             holder.txtLastVisitExitTime.setText(timeFormat.format(new Date(visit.endTime)));
             holder.txtVisitDuration.setText(getVisitDuration(visit));
+
+            if (visits.size() > 1){
+                holder.txtVisitLabel.setText(context.getResources().getString(R.string.locationview_visits));
+            }
         }
 
         final String locationLabelTemp = locationLabel;
@@ -135,6 +140,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
         TextView txtLastVisitExitTime;
         TextView txtVisitDuration;
         TextView txtVisitCount;
+        TextView txtVisitLabel;
     }
 
     public String getVisitInfo(KnownLocation knownLocation) {
