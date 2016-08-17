@@ -24,8 +24,10 @@ import java.util.Locale;
 
 import ms.loop.loopsdk.profile.KnownLocation;
 import ms.loop.loopsdk.profile.Label;
+import ms.loop.loopsdk.profile.Trip;
 import ms.loop.loopsdk.profile.Visit;
 import ms.loop.loopsdk.profile.Visits;
+import sampleapp.loop.ms.locations.utils.LocationView;
 
 /**
  * Created on 5/30/16.
@@ -37,8 +39,7 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
     Context context;
     int layoutResourceId;
     List<KnownLocation> locations = new ArrayList<>();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE (MM/dd)", Locale.US);
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+
 
     public LocationsViewAdapter(Context context, int layoutResourceId, List<KnownLocation> data) {
         super(context, layoutResourceId, data);
@@ -66,28 +67,18 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        TripHolder holder = null;
+        LocationView holder = null;
 
         if(row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
-            holder = new TripHolder();
-            holder.txtLocantionName = (TextView)row.findViewById(R.id.locationName);
-            holder.txtLastVisited = (TextView)row.findViewById(R.id.txtlastvisited);
 
-            holder.txtLastVisitEnterTime = (TextView)row.findViewById(R.id.lastvisitentertime);
-            holder.txtLastVisitExitTime = (TextView)row.findViewById(R.id.lastvisitexittime);
-            holder.txtVisitDuration = (TextView)row.findViewById(R.id.visitduration);
-
-            holder.locationIcon = (ImageView)row.findViewById(R.id.locationicon);
-            holder.txtVisitCount = (TextView) row.findViewById(R.id.visitcount);
-            holder.txtVisitLabel = (TextView) row.findViewById(R.id.visitlable);
-
+            holder = new LocationView(row);
             row.setTag(holder);
             row.setClickable(true);
         }
         else {
-            holder = (TripHolder)row.getTag();
+            holder = (LocationView) row.getTag();
         }
 
 
@@ -95,103 +86,25 @@ public class LocationsViewAdapter extends ArrayAdapter<KnownLocation> {
 
         final KnownLocation location = locations.get(position);
         if (location == null ) return row;
+        holder.update(context, location);
 
-        String locationLabel = getLocationLabels(location);
-        holder.txtLocantionName.setText(locationLabel);
-        holder.locationIcon.setImageResource(locationLabel.equalsIgnoreCase("work")? R.drawable.work : R.drawable.home);
-        holder.txtLastVisited.setText(String.format(Locale.US, "%s", dateFormat.format(location.updatedAt)));
-        holder.txtVisitCount.setText(""+location.visits.size());
-
-        List <Visit> visits = location.visits.getVisits();
-
-        if (visits.size() > 0){
-
-            Visit visit = visits.get(visits.size() -  1);
-            holder.txtLastVisitEnterTime.setText(timeFormat.format(new Date(visit.startTime)));
-            holder.txtLastVisitExitTime.setText(timeFormat.format(new Date(visit.endTime)));
-            holder.txtVisitDuration.setText(getVisitDuration(visit));
-
-            if (visits.size() > 1){
-                holder.txtVisitLabel.setText(context.getResources().getString(R.string.locationview_visits));
-            }
-        }
-
-        final String locationLabelTemp = locationLabel;
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Uri gmmIntentUri = Uri.parse(String.format(Locale.US, "geo:0,0?q=%f,%f(%s)", location.latDegrees, location.longDegrees, locationLabelTemp));
+              /*  Uri gmmIntentUri = Uri.parse(String.format(Locale.US, "geo:0,0?q=%f,%f(%s)", location.latDegrees, location.longDegrees, locationLabelTemp));
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(mapIntent);
-                }
+                }*/
+
+                Intent myIntent = new Intent(context, MapsActivity.class);
+                myIntent.putExtra("locationid", location.entityId); //Optional parameters
+                context.startActivity(myIntent);
             }
         });
         return row;
     }
 
-    static class TripHolder {
-        ImageView locationIcon;
-        TextView txtLocantionName;
-        TextView txtLastVisited;
-        TextView txtLastVisitEnterTime;
-        TextView txtLastVisitExitTime;
-        TextView txtVisitDuration;
-        TextView txtVisitCount;
-        TextView txtVisitLabel;
-    }
-
-    public String getVisitInfo(KnownLocation knownLocation) {
-
-        String enterExitInfo = String.format(Locale.US, "Entered at %s", dateFormat.format(new Date(knownLocation.lastEnteredAt)));
-
-        if (knownLocation.lastExitedAt != -1) {
-            enterExitInfo += String.format(Locale.US, " and exited at %s", dateFormat.format(new Date(knownLocation.lastExitedAt)));
-        }
-        return enterExitInfo;
-    }
-
-    public String getVisitDuration(Visit visit)
-    {
-        long diffInSeconds = (visit.endTime - visit.startTime) / 1000;
-
-        long diff[] = new long[] {0, 0, 0 };
-        diff[2] = (diffInSeconds >= 60 ? diffInSeconds % 60 : diffInSeconds);
-        diff[1] = (diffInSeconds = (diffInSeconds / 60)) >= 60 ? diffInSeconds % 60 : diffInSeconds;
-        diff[0] = (diffInSeconds = (diffInSeconds / 60)) >= 24 ? diffInSeconds % 24 : diffInSeconds;
-
-        return String.format(Locale.US,
-                "%s%d:%s%d:%s%d",
-                diff[0] < 9 ? "0" : "",
-                diff[0],
-                diff[1] < 9 ? "0": "",
-                diff[1],
-                diff[2] < 9 ? "0":"",
-                diff[2]);
-    }
-
-    private String getLocationLabels(KnownLocation location) {
-
-        StringBuffer locationLabel = new StringBuffer();
-        if (location.hasLabels()){
-            for (Label label:location.labels) {
-                String tmpLabel = label.name;
-                if (tmpLabel.equals("work")) tmpLabel = "Work";
-                if (tmpLabel.equals("home")) tmpLabel = "Home";
-
-                if (!TextUtils.isEmpty(locationLabel.toString())){
-                    locationLabel.append(", ");
-                }
-                locationLabel.append(tmpLabel);
-
-            }
-        }
-        else {
-            return "Unknown";
-        }
-
-        return locationLabel.toString();
-    }
 }

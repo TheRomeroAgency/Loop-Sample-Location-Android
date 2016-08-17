@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onSuccess(LoopLocale value) {
                             location.labels.add(value.getFriendlyName(), 1);
+                            location.update();
                         }
                         @Override
                         public void onError(LoopError error) {}
@@ -201,12 +202,10 @@ public class MainActivity extends AppCompatActivity
         });
 
         String[] ids = getResources().getStringArray(R.array.navigationmenu);
-
         final ListView lv1 = (ListView) findViewById(R.id.custom_list);
         lv1.setAdapter(new NavigationViewAdapter(this, ids));
         lv1.setItemsCanFocus(false);
         lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = lv1.getItemAtPosition(position);

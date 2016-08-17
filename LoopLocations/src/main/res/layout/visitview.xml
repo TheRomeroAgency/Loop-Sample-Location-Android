@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listcontainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
+
+        <TextView
+            android:id="@+id/txtlastvisited"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingTop="5dp"
+            android:text="@string/locationview_title"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/RelativeLayout02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="59dp"
+        android:layout_toLeftOf="@+id/RelativeLayout03"
+        android:layout_alignBottom="@+id/RelativeLayout01"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
+
+        <ImageView
+            android:id="@+id/enterIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/from_circle"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/lastvisitentertime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/locationview_lat_long"
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp" />
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/enterarrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/small_arrow"
+            android:layout_gravity="center"
+            android:paddingLeft="8dp"/>
+
+        <ImageView
+            android:id="@+id/exitIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/to_circle"
+            android:layout_gravity="center"
+            android:paddingLeft="8dp"/>
+
+        <TextView
+            android:id="@+id/lastvisitexittime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/locationview_last_updated"
+            android:textSize="12sp"
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/RelativeLayout03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:paddingRight="16dp"
+        android:layout_alignBottom="@+id/RelativeLayout01"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp">
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/durionIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/duration"
+            android:layout_gravity="center"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/visitduration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/locationview_score"
+            android:textSize="12sp"
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp"/>
+
+    </LinearLayout>
+</RelativeLayout>

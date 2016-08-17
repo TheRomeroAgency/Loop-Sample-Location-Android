@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.TextView;
+import android.support.multidex.MultiDexApplication;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
@@ -31,7 +32,7 @@ import ms.loop.loopsdk.signal.Signal;
 import ms.loop.loopsdk.signal.SignalConfig;
 import ms.loop.loopsdk.util.LoopError;
 
-public class SampleAppApplication extends Application implements ILoopSDKCallback {
+public class SampleAppApplication extends MultiDexApplication implements ILoopSDKCallback {
 
     private static final String TAG = SampleAppApplication.class.getSimpleName();
     private static KnownLocationProcessor knownLocationProcessor ;
